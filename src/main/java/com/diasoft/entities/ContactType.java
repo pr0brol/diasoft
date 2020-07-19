@@ -4,11 +4,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Data
 @Table(name = "contact_type")
+@XmlRootElement(name = "contactType")
 public class ContactType {
 
     @Id
@@ -19,6 +22,13 @@ public class ContactType {
     @Column
     private String type;
 
-    @OneToOne(mappedBy = "contactType")
-    private Contact contact;
+    @OneToMany(mappedBy = "contactType", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Contact> contacts;
+
+    @Override
+    public String toString() {
+        return "ContactType{" +
+                "type='" + type + '\'' +
+                '}';
+    }
 }

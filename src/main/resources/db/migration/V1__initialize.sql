@@ -20,7 +20,7 @@ INSERT INTO persons
 DROP TABLE IF EXISTS contact_type CASCADE;
 CREATE TABLE contact_type (
   id                     BIGSERIAL,
-  type                   VARCHAR(255) NOT NULL,
+  type                   VARCHAR(255) UNIQUE NOT NULL,
   PRIMARY KEY(id)
 );
 

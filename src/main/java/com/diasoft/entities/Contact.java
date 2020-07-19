@@ -1,14 +1,18 @@
 package com.diasoft.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @NoArgsConstructor
 @Data
 @Table(name = "contacts")
+@XmlRootElement(name = "contact")
 public class Contact {
 
     @Id
@@ -29,8 +33,16 @@ public class Contact {
     @Column(name = "contact_type_id", insertable = false, updatable = false)
     private Long contact_type_id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="contact_type_id")
+    @ManyToOne
+    @JoinColumn(name="contact_type_id", referencedColumnName = "id")
     private ContactType contactType;
 
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "number='" + number + '\'' +
+                ", contactType=" + contactType +
+                '}';
+    }
 }

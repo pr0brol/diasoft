@@ -5,12 +5,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @Data
 @Table(name = "persons")
+@XmlRootElement(name = "person")
 public class Person {
 
     @Id
@@ -32,7 +34,18 @@ public class Person {
     @Column
     private String position;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Contact> contacts;
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", middle_name='" + middle_name + '\'' +
+                ", position='" + position + '\'' +
+                ", contacts=" + contacts +
+                '}';
+    }
 }
